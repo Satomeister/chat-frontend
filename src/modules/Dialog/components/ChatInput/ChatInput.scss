@@ -1,0 +1,63 @@
+.chat__input {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  margin: 0 20px 30px;
+  border: 1px solid #E9E9E9;
+  border-radius: 4px;
+
+  &-picker {
+    position: absolute;
+    bottom: 40px;
+    left: 10px;
+    opacity: 0;
+    animation: pickerShow .1s;
+    animation-delay: 500ms;
+    animation-fill-mode: forwards;
+  }
+
+  .ant-input {
+    padding-left: 0;
+    padding-right: 0;
+    margin: 6px 0;
+  }
+
+  .anticon {
+    margin: 13px 8px;
+    cursor: pointer;
+    color: #8C8C8C;
+    transition: all .2s;
+
+    svg {
+      font-size: 18px;
+    }
+
+    &:hover {
+      color: #1890ff;
+    }
+  }
+
+  .icon-send {
+    &.anticon {
+      color: #1890ff;
+      transition: all .2s;
+
+      svg {
+        font-size: 20px;
+      }
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+}
+
+@keyframes pickerShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

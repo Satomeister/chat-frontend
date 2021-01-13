@@ -1,0 +1,64 @@
+.dialog {
+  display: flex;
+  flex-direction: column;
+  max-width: 830px;
+  width: 100%;
+  background: #FFFFFF;
+
+  &__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+    border-bottom: 1px solid #F7F7F7;
+
+    &-info {
+      text-align: center;
+
+      &-title {
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      &-online {
+        width: 50px;
+        margin: 0 auto;
+        padding-left: 9px;
+        position: relative;
+        color: #CBCBCB;
+
+        &:before {
+          content: '';
+          position: absolute;
+          left: -3px;
+          top: 50%;
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #00C980;
+        }
+      }
+
+      &-offline {
+        position: relative;
+        color: red;
+
+        &:before {
+          content: 'ewfwef';
+          position: absolute;
+          left: -10px;
+          width: 6px;
+          height: 6px;
+          background: #00C980;
+        }
+      }
+    }
+  }
+
+  &__messages {
+    max-height: 870px;
+    height: 100%;
+    padding: 20px 35px;
+    overflow-y: auto;
+  }
+}
