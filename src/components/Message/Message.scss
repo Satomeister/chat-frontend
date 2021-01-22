@@ -23,13 +23,13 @@
 
     #{$message}__content {
       &-text {
+        position: relative;
         float: right;
         border: 1px solid #ECECEC;
         border-radius: 12px 12px 0 12px;
         background: #FFFFFF;
         color: #202020 !important;
         box-shadow: none;
-
         &:before {
           content: url("../../assets/images/read/unread.svg");
           position: absolute;
@@ -79,60 +79,59 @@
         margin-bottom: 10px;
       }
 
-      &-file {
-        width: 170px;
-        margin-bottom: 10px;
-
-        &-top {
-          position: relative;
-          height: 60px;
-          padding: 10px;
-          border-radius: 6px 6px 0 0;
-          background: #EFF4FF;
-
-          span:nth-child(1) {
-            display: block;
-            font-weight: 500;
-          }
-
-          span:nth-child(2) {
-            display: block;
-            font-size: 13px;
-            color: #8C8C8C;
-          }
-
-          &:after {
-            position: absolute;
-            content: url('../../assets/images/file.svg');
-            right: 20px;
-            top: 15px;
-            overflow: hidden;
-          }
-        }
-
-        &-bottom {
-          display: flex;
-          height: 30px;
-          align-items: center;
-          border-radius: 0 0 6px 6px;
-          background: #3674FF;
-          cursor: pointer;
-
-          .anticon {
-            margin: 0 10px;
-            color: #FFFFFF;
-            font-size: 16px;
-          }
-
-          span {
-            color: #FFFFFF;
-          }
-        }
-      }
+      //&-file {
+      //  width: 170px;
+      //  margin-bottom: 10px;
+      //
+      //  &-top {
+      //    position: relative;
+      //    height: 60px;
+      //    padding: 10px;
+      //    border-radius: 6px 6px 0 0;
+      //    background: #EFF4FF;
+      //
+      //    span:nth-child(1) {
+      //      display: block;
+      //      font-weight: 500;
+      //    }
+      //
+      //    span:nth-child(2) {
+      //      display: block;
+      //      font-size: 13px;
+      //      color: #8C8C8C;
+      //    }
+      //
+      //    &:after {
+      //      position: absolute;
+      //      content: url('../../assets/images/file.svg');
+      //      right: 20px;
+      //      top: 15px;
+      //      overflow: hidden;
+      //    }
+      //  }
+      //
+      //  &-bottom {
+      //    display: flex;
+      //    height: 30px;
+      //    align-items: center;
+      //    border-radius: 0 0 6px 6px;
+      //    background: #3674FF;
+      //    cursor: pointer;
+      //
+      //    .anticon {
+      //      margin: 0 10px;
+      //      color: #FFFFFF;
+      //      font-size: 16px;
+      //    }
+      //
+      //    span {
+      //      color: #FFFFFF;
+      //    }
+      //  }
+      //}
     }
 
     &-text {
-      position: relative;
       display: inline-block;
       margin-bottom: 4px;
       padding: 13px;
@@ -143,18 +142,8 @@
       box-shadow: 0 5px 5px #D7E3FF;
       word-break: break-word;
       white-space: pre-line;
-
-      &:before {
-        content: url("../../assets/images/read/unread.svg");
-        position: absolute;
-        right: -17px;
-        bottom: -6px;
-      }
-
-      &--read {
-        &:before {
-          content: url("../../assets/images/read/read.svg");
-        }
+      &::selection {
+        background: #8C8C8C;
       }
     }
 

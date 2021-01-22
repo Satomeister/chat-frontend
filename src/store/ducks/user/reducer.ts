@@ -6,13 +6,15 @@ import { IUser } from "./contracts/state";
 export interface UserState {
   data: IUser | null;
   status: LoadingStatus;
-  authError: string | null;
+  loginError: string;
+  regError: string;
 }
 
 const initialState: UserState = {
   data: null,
   status: LoadingStatus.NEVER,
-  authError: null,
+  loginError: '',
+  regError: ''
 };
 
 export const userReducer = produce(
@@ -25,8 +27,14 @@ export const userReducer = produce(
         draft.data = action.payload;
         draft.status = LoadingStatus.SUCCESS;
         break;
-      case UserActionTypes.SET_AUTH_ERROR:
-        draft.authError = action.payload;
+      case UserActionTypes.SET_LOGIN_ERROR:
+        draft.loginError = action.payload;
+        break;
+      case UserActionTypes.SET_REG_ERROR:
+        draft.regError = action.payload;
+        break;
+      case UserActionTypes.UPDATE_USER_ONLINE_STATUS:
+        draft.data!.isOnline = action.payload;
         break;
       default:
         break;

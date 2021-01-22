@@ -5,7 +5,7 @@ export interface IDialog {
   _id: string;
   admin: IUser;
   partner: IUser;
-  messageCount: number;
+  unreadMessagesCount: number;
   lastMessage?: IMessage;
   createdAt: Date;
   updatedAt: Date;

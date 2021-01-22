@@ -1,24 +1,21 @@
 import { IDialog } from "../../dialogList/contracts/state";
-
-export interface Attachment {
-  type: "image" | "document";
-  url: string;
-}
+import {IUser} from "../../user/contracts/state";
 
 export interface IMessage {
   _id: string;
   text?: string;
-  attachments?: Attachment[];
+  attachments?: string[];
   dialog: IDialog;
-  sender: string;
+  sender: IUser;
   user: string;
-  createdAt: Date,
-  updatedAt: Date,
+  createdAt: Date;
+  updatedAt: Date;
   read: boolean;
 }
 
 export interface SendMessagePayload {
   text?: string;
-  attachments?: Attachment[];
+  attachments?: string[];
   dialog: string;
+  isFirstMessage: boolean;
 }

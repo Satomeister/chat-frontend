@@ -1,6 +1,7 @@
 import { Action } from "redux";
 import { IDialog } from "./state";
 import { LoadingStatus } from "../../../types";
+import { IUser } from "../../user/contracts/state";
 
 export enum DialogListActionTypes {
   FETCH_DIALOG_LIST = "dialogList/FETCH_DIALOG_LIST",
@@ -11,6 +12,9 @@ export enum DialogListActionTypes {
   SET_ADD_DIALOG_STATUS = "dialogList/SET_ADD_DIALOG_STATUS",
   UPDATE_DIALOG_LAST_MESSAGE = "dialogList/UPDATE_DIALOG_LAST_MESSAGE",
   ADD_DIALOG_ERROR = "dialogList/ADD_DIALOG_ERROR",
+  SET_DIALOG_UNREAD_MESSAGES_COUNT = "dialogList/SET_UNREAD_MESSAGES_COUNT",
+  SET_DIALOG_LAST_MESSAGE_READ = "dialogList/SET_DIALOG_LAST_MESSAGE_READ",
+  UPDATE_DIALOG_LIST_ITEM_STATUS_ONLINE = "dialogList/UPDATE_DIALOG_LIST_ITEM_STATUS_ONLINE",
 }
 
 export interface FetchDialogListAction extends Action<DialogListActionTypes> {
@@ -55,6 +59,24 @@ export interface AddDialogErrorAction extends Action<DialogListActionTypes> {
   payload: string;
 }
 
+export interface SetDialogUnreadMessagesCountAction
+  extends Action<DialogListActionTypes> {
+  type: DialogListActionTypes.SET_DIALOG_UNREAD_MESSAGES_COUNT;
+  payload: string;
+}
+
+export interface SetDialogLastMessageReadAction
+  extends Action<DialogListActionTypes> {
+  type: DialogListActionTypes.SET_DIALOG_LAST_MESSAGE_READ;
+  payload: string;
+}
+
+export interface UpdateDialogListItemStatusOnlineAction
+  extends Action<DialogListActionTypes> {
+  type: DialogListActionTypes.UPDATE_DIALOG_LIST_ITEM_STATUS_ONLINE;
+  payload: IUser;
+}
+
 export type DialogListActions =
   | FetchDialogListAction
   | SetDialogListAction
@@ -63,4 +85,7 @@ export type DialogListActions =
   | SetAddDialogStatusAction
   | SetGetDialogsStatusAction
   | UpdateDialogLastMessageAction
-  | AddDialogErrorAction;
+  | AddDialogErrorAction
+  | SetDialogUnreadMessagesCountAction
+  | SetDialogLastMessageReadAction
+  | UpdateDialogListItemStatusOnlineAction;

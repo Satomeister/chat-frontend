@@ -6,8 +6,7 @@ import { FormWrapper, SubmitButton } from "../../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSignIn } from "../../../store/ducks/user/actionCreators";
 import {
-  selectAuthError,
-  selectIsAuth,
+  selectIsAuth, selectLoginError,
   selectUserStatus,
 } from "../../../store/ducks/user/selector";
 import { LoadingStatus } from "../../../store/types";
@@ -20,7 +19,7 @@ interface FormValues {
 const SignIn: FC = (): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const error = useSelector(selectAuthError);
+  const error = useSelector(selectLoginError);
   const status = useSelector(selectUserStatus);
   const isAuth = useSelector(selectIsAuth);
 
@@ -39,14 +38,14 @@ const SignIn: FC = (): JSX.Element => {
       <Form onFinish={onFinish}>
         <Form.Item
           name="email"
-          rules={[{ required: true, message: "Please input your email!" }]}
+          rules={[{ required: true, message: "Please input your login or email!" }]}
         >
           <Input
             size="large"
             id="email"
             name="email"
-            type="email"
-            placeholder="E-mail"
+            type="text"
+            placeholder="Login or E-mail"
           />
         </Form.Item>
 

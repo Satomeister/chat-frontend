@@ -3,9 +3,11 @@ import {
   FetchSignInAction,
   FetchSignUpAction,
   FetchUserDataAction,
-  setAuthErrorAction,
+  SetLoginErrorAction,
+  SetRegErrorAction,
   SetUserDataAction,
   SetUserLoadingStatusAction,
+  UpdateUserOnlineStatusAction,
   UserActionTypes,
 } from "./contracts/actionTypes";
 import { LoadingStatus } from "../../types";
@@ -36,7 +38,19 @@ export const setUserLoadingStatus = (
   payload,
 });
 
-export const setAuthError = (payload: string): setAuthErrorAction => ({
-  type: UserActionTypes.SET_AUTH_ERROR,
+export const setLoginError = (payload: string): SetLoginErrorAction => ({
+  type: UserActionTypes.SET_LOGIN_ERROR,
+  payload,
+});
+
+export const setRegError = (payload: string): SetRegErrorAction => ({
+  type: UserActionTypes.SET_REG_ERROR,
+  payload,
+});
+
+export const updateUserOnlineStatus = (
+  payload: boolean
+): UpdateUserOnlineStatusAction => ({
+  type: UserActionTypes.UPDATE_USER_ONLINE_STATUS,
   payload,
 });

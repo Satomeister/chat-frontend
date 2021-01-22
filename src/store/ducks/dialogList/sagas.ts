@@ -9,18 +9,17 @@ import {
 } from "./actionCreators";
 import { LoadingStatus } from "../../types";
 import { DialogListApi } from "../../../api/dialogListApi";
-import { setDialog } from "../dialog/actionCreators";
+import { setCurrentDialog } from "../dialog/actionCreators";
 import socket from "../../../core/socket";
-import {IDialog} from "./contracts/state";
+import { IDialog } from "./contracts/state";
 
 function* fetchDialogListRequest() {
   try {
     yield put(setGetDialogsStatus(LoadingStatus.LOADING));
     const { data } = yield call(DialogListApi.getDialogs);
     data.forEach((dialog: IDialog) => {
-      socket.emit('ROOM:JOIN', dialog._id)
-    })
-    socket.on('ROOM:JOINED', (message: string) => console.log(message))
+      socket.emit("ROOM:JOIN", dialog._id);
+    });
     yield put(setDialogList(data));
     yield put(setGetDialogsStatus(LoadingStatus.SUCCESS));
   } catch (error) {
@@ -34,7 +33,7 @@ function* fetchAddDialogRequest({ payload }: any) {
     yield put(setAddDialogStatus(LoadingStatus.LOADING));
     const { data } = yield call(DialogListApi.addDialog, payload);
     yield put(addDialog(data.dialog));
-    yield put(setDialog(data.dialog));
+    yield put(setCurrentDialog(data.dialog));
     yield put(setAddDialogStatus(LoadingStatus.SUCCESS));
   } catch (error) {
     if (error.response?.status) {

@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import {Alert, Modal, Select} from "antd";
+import { Alert, Modal, Select, Tooltip } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 
 import { FormOutlined } from "@ant-design/icons";
@@ -9,7 +9,10 @@ import { LoadingStatus } from "../../../store/types";
 import { IUser } from "../../../store/ducks/user/contracts/state";
 import { UsersApi } from "../../../api/usersApi";
 import { fetchAddDialog } from "../../../store/ducks/dialogList/actionCreators";
-import {selectAddDialogError, selectAddDialogStatus} from "../../../store/ducks/dialogList/selector";
+import {
+  selectAddDialogError,
+  selectAddDialogStatus,
+} from "../../../store/ducks/dialogList/selector";
 import { selectDialogId } from "../../../store/ducks/dialog/selectors";
 
 const { Option } = Select;
@@ -22,7 +25,7 @@ const AddDialog: FC = (): JSX.Element => {
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
   const status = useSelector(selectAddDialogStatus);
   const createdDialogId = useSelector(selectDialogId);
-  const error = useSelector(selectAddDialogError)
+  const error = useSelector(selectAddDialogError);
 
   const handleOk = () => {
     if (selectedUser) {
@@ -32,7 +35,7 @@ const AddDialog: FC = (): JSX.Element => {
 
   useEffect(() => {
     if (status === LoadingStatus.SUCCESS) {
-      setIsModal(false)
+      setIsModal(false);
       history.push(`/dialog/${createdDialogId}`);
     }
   }, [status, createdDialogId, history]);
@@ -48,10 +51,12 @@ const AddDialog: FC = (): JSX.Element => {
 
   return (
     <>
-      <FormOutlined
-        onClick={() => setIsModal(true)}
-        className="dialogs__header-icon"
-      />
+      <Tooltip placement="bottom" title="new dialog">
+        <FormOutlined
+          onClick={() => setIsModal(true)}
+          className="dialogs__header-icon"
+        />
+      </Tooltip>
       <Modal
         title="Find the person and start dialog"
         visible={isModal}
@@ -76,11 +81,9 @@ const AddDialog: FC = (): JSX.Element => {
             </Option>
           ))}
         </Select>
-        {error
-        && (
-          <Alert type="error" message={error} style={{marginTop: 20}}/>
-        )
-        }
+        {error && (
+          <Alert type="error" message={error} style={{ marginTop: 20 }} />
+        )}
       </Modal>
     </>
   );

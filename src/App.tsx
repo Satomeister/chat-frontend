@@ -1,13 +1,13 @@
-import React, {FC, useEffect} from "react";
-import {Route, Switch, useHistory} from "react-router-dom";
+import React, { FC, useEffect } from "react";
+import { Route, Switch, useHistory } from "react-router-dom";
+import { Result, Spin } from "antd";
 
 import "./index.scss";
-import {Auth, Home} from "./pages";
-import {useDispatch, useSelector} from "react-redux";
-import {fetchUserData} from "./store/ducks/user/actionCreators";
-import {selectIsAuth, selectUserStatus} from "./store/ducks/user/selector";
-import {LoadingStatus} from "./store/types";
-import {Spin} from "antd";
+import { Auth, Home } from "./pages";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserData } from "./store/ducks/user/actionCreators";
+import { selectIsAuth, selectUserStatus } from "./store/ducks/user/selector";
+import { LoadingStatus } from "./store/types";
 
 const App: FC = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -33,8 +33,8 @@ const App: FC = (): JSX.Element => {
 
   if (!isReady) {
     return (
-      <div className='centered'>
-        <Spin size="large"/>
+      <div className="centered">
+        <Spin size="large" />
         <span>Chat</span>
       </div>
     );
@@ -43,8 +43,15 @@ const App: FC = (): JSX.Element => {
   return (
     <div className="app">
       <Switch>
-        <Route path="/auth" component={Auth}/>
-        <Route path="/" component={Home}/>
+        <Route path="/auth" component={Auth} />
+        <Route exact path={["/", "/dialog/:id"]} component={Home} />
+        <Route path="*">
+          <Result
+            status="404"
+            title="404"
+            subTitle="Sorry, the page is not found."
+          />
+        </Route>
       </Switch>
     </div>
   );

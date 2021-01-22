@@ -1,13 +1,11 @@
 import React, { FC } from "react";
 import classNames from "classnames";
 import { Avatar, Image } from "antd";
-import { UserOutlined } from "@ant-design/icons/lib";
-import formatDistance from "date-fns/formatDistance";
-import { DownloadOutlined } from "@ant-design/icons";
 
 import "./Message.scss";
 import { IMessage } from "../../store/ducks/dialog/contracts/state";
 import { parseEmojis } from "../../utils/parseEmojis";
+import {getMessageTime} from "../../utils/utils";
 
 interface MessageProps {
   message: IMessage;
@@ -20,8 +18,11 @@ const Message: FC<MessageProps> = ({
   userId,
   sameSender,
 }): JSX.Element => {
-  const isMe = message.sender === userId;
-
+  const isMe = message.sender._id === userId;
+  const avatarStyle =
+    message.sender.avatar.length === 7
+      ? { backgroundColor: message.sender.avatar }
+      : undefined;
   return (
     <div
       className={classNames("message", {
@@ -31,42 +32,31 @@ const Message: FC<MessageProps> = ({
     >
       <div className="message__avatar">
         {!sameSender ? (
-          <Avatar size={40} icon={<UserOutlined />} />
+          <Avatar style={avatarStyle} size={40}>
+            {message.sender.name[0].toUpperCase()}
+          </Avatar>
         ) : (
           <div style={{ width: 40 }} />
         )}
       </div>
       <div className={"message__content"}>
         <div className="message__content-attachments">
-          {message.attachments?.map((att) => {
-            if (att.type === "image") {
-              return <Image width={120} src={att.url} />;
-            } else {
-              return (
-                <div className="message__content-attachments-file">
-                  <div className="message__content-attachments-file-top">
-                    <span>FileName.jsx</span>
-                    <span>Size: 123 kb.</span>
-                  </div>
-                  <div className="message__content-attachments-file-bottom">
-                    <DownloadOutlined />
-                    <span>Download</span>
-                  </div>
-                </div>
-              );
-            }
+          {message.attachments?.map((imageUrl) => {
+            return <Image key={imageUrl} width={120} src={imageUrl} />;
           })}
         </div>
-        <p
-          className={classNames("message__content-text", {
-            "message__content-text--read": message.read,
-            "message__content-text--same": sameSender,
-          })}
-        >
-          {parseEmojis(message.text || "")}
-        </p>
+        {message.text && (
+          <p
+            className={classNames("message__content-text", {
+              "message__content-text--read": message.read,
+              "message__content-text--same": sameSender,
+            })}
+          >
+            {parseEmojis(message.text)}
+          </p>
+        )}
         <div className="message__content-date">
-          {formatDistance(new Date(), new Date(message.createdAt))}
+          {getMessageTime(new Date(message.createdAt))}
         </div>
       </div>
     </div>

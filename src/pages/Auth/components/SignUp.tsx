@@ -6,8 +6,8 @@ import { Alert, Form, Input } from "antd";
 import { FormWrapper, SubmitButton } from "../../../components";
 import { fetchSignUp } from "../../../store/ducks/user/actionCreators";
 import {
-  selectAuthError,
   selectIsAuth,
+  selectRegError,
   selectUserStatus,
 } from "../../../store/ducks/user/selector";
 import { LoadingStatus } from "../../../store/types";
@@ -22,7 +22,7 @@ interface FormValues {
 const SignUp: FC = (): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const error = useSelector(selectAuthError);
+  const error = useSelector(selectRegError);
   const status = useSelector(selectUserStatus);
   const isAuth = useSelector(selectIsAuth);
 

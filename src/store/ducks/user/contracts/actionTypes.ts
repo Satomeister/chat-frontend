@@ -8,7 +8,9 @@ export enum UserActionTypes {
   FETCH_SIGN_IN = "user/FETCH_SIGN_IN",
   FETCH_SIGN_UP = "user/FETCH_SIGN_UP",
   SET_LOADING = "user/SET_LOADING",
-  SET_AUTH_ERROR = "user/SET_AUTH_ERROR",
+  SET_LOGIN_ERROR = "user/SET_LOGIN_ERROR",
+  SET_REG_ERROR = "user/SET_REG_ERROR",
+  UPDATE_USER_ONLINE_STATUS = "user/UPDATE_USER_ONLINE_STATUS",
 }
 
 export interface SetUserDataAction extends Action<UserActionTypes> {
@@ -35,9 +37,19 @@ export interface SetUserLoadingStatusAction extends Action<UserActionTypes> {
   payload: LoadingStatus;
 }
 
-export interface setAuthErrorAction extends Action<UserActionTypes> {
-  type: UserActionTypes.SET_AUTH_ERROR;
+export interface SetLoginErrorAction extends Action<UserActionTypes> {
+  type: UserActionTypes.SET_LOGIN_ERROR;
   payload: string;
+}
+
+export interface SetRegErrorAction extends Action<UserActionTypes> {
+  type: UserActionTypes.SET_REG_ERROR;
+  payload: string;
+}
+
+export interface UpdateUserOnlineStatusAction extends Action<UserActionTypes> {
+  type: UserActionTypes.UPDATE_USER_ONLINE_STATUS;
+  payload: boolean;
 }
 
 export type UserActions =
@@ -46,4 +58,6 @@ export type UserActions =
   | FetchSignInAction
   | FetchSignUpAction
   | SetUserLoadingStatusAction
-  | setAuthErrorAction;
+  | SetLoginErrorAction
+  | SetRegErrorAction
+  | UpdateUserOnlineStatusAction;

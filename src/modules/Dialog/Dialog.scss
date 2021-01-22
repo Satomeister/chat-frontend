@@ -40,16 +40,21 @@
       }
 
       &-offline {
+        width: 50px;
+        margin: 0 auto;
+        padding-left: 9px;
         position: relative;
-        color: red;
+        color: #CBCBCB;
 
         &:before {
-          content: 'ewfwef';
+          content: '';
           position: absolute;
-          left: -10px;
-          width: 6px;
-          height: 6px;
-          background: #00C980;
+          left: -3px;
+          top: 50%;
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: #FF4D4F;
         }
       }
     }

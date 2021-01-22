@@ -43,6 +43,34 @@ export const dialogListReducer = produce(
       case DialogListActionTypes.ADD_DIALOG_ERROR:
         draft.addDialogError = action.payload;
         break;
+      case DialogListActionTypes.SET_DIALOG_UNREAD_MESSAGES_COUNT:
+        draft.dialogs = draft.dialogs.map((dialog) => {
+          if (dialog._id === action.payload) {
+            dialog.unreadMessagesCount = 0;
+            return dialog;
+          }
+          return dialog;
+        });
+        break;
+      case DialogListActionTypes.SET_DIALOG_LAST_MESSAGE_READ:
+        draft.dialogs = draft.dialogs.map((dialog) => {
+          if (dialog._id === action.payload) {
+            dialog.lastMessage!.read = true;
+            return dialog;
+          }
+          return dialog;
+        });
+        break;
+      case DialogListActionTypes.UPDATE_DIALOG_LIST_ITEM_STATUS_ONLINE:
+        draft.dialogs = draft.dialogs.map((dialog) => {
+          if (dialog.admin._id === action.payload._id) {
+            dialog.admin = action.payload;
+          } else if (dialog.partner._id === action.payload._id) {
+            dialog.partner = action.payload;
+          }
+          return dialog;
+        });
+        break;
       default:
         break;
     }
