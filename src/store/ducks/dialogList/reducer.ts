@@ -35,7 +35,7 @@ export const dialogListReducer = produce(
       case DialogListActionTypes.SET_GET_DIALOGS_STATUS:
         draft.getDialogsStatus = action.payload;
         break;
-      case DialogListActionTypes.UPDATE_DIALOG_LAST_MESSAGE:
+      case DialogListActionTypes.UPDATE_DIALOG_LIST_ITEM:
         draft.dialogs = draft.dialogs.map((dialog) =>
           dialog._id === action.payload._id ? action.payload : dialog
         );
@@ -76,4 +76,4 @@ export const dialogListReducer = produce(
     }
   },
   initialState
-); 
+);

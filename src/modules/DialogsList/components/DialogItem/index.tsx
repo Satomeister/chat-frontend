@@ -1,4 +1,5 @@
 import React, { FC, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Avatar } from "antd";
 import classNames from "classnames";
@@ -7,8 +8,8 @@ import "./DialogItem.scss";
 
 import readImg from "../../../../assets/images/read/read.svg";
 import unreadImg from "../../../../assets/images/read/unread.svg";
+
 import { IDialog } from "../../../../store/ducks/dialogList/contracts/state";
-import { useDispatch, useSelector } from "react-redux";
 import { selectUserId } from "../../../../store/ducks/user/selector";
 import { IUser } from "../../../../store/ducks/user/contracts/state";
 import socket from "../../../../core/socket";

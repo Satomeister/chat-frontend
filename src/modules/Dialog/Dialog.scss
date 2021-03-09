@@ -3,14 +3,14 @@
   flex-direction: column;
   max-width: 830px;
   width: 100%;
-  background: #FFFFFF;
+  background: #ffffff;
 
   &__header {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 60px;
-    border-bottom: 1px solid #F7F7F7;
+    border-bottom: 1px solid #f7f7f7;
 
     &-info {
       text-align: center;
@@ -25,17 +25,17 @@
         margin: 0 auto;
         padding-left: 9px;
         position: relative;
-        color: #CBCBCB;
+        color: #cbcbcb;
 
         &:before {
-          content: '';
+          content: "";
           position: absolute;
           left: -3px;
           top: 50%;
           width: 6px;
           height: 6px;
           border-radius: 50%;
-          background: #00C980;
+          background: #00c980;
         }
       }
 
@@ -44,17 +44,17 @@
         margin: 0 auto;
         padding-left: 9px;
         position: relative;
-        color: #CBCBCB;
+        color: #cbcbcb;
 
         &:before {
-          content: '';
+          content: "";
           position: absolute;
           left: -3px;
           top: 50%;
           width: 7px;
           height: 7px;
           border-radius: 50%;
-          background: #FF4D4F;
+          background: #ff4d4f;
         }
       }
     }

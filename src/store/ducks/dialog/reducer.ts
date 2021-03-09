@@ -1,8 +1,8 @@
-import produce, {Draft} from "immer";
-import {IDialog} from "../dialogList/contracts/state";
-import {DialogActions, DialogActionTypes} from "./contracts/actionTypes";
-import {LoadingStatus} from "../../types";
-import {IMessage} from "./contracts/state";
+import produce, { Draft } from "immer";
+import { IDialog } from "../dialogList/contracts/state";
+import { DialogActions, DialogActionTypes } from "./contracts/actionTypes";
+import { LoadingStatus } from "../../types";
+import { IMessage } from "./contracts/state";
 
 export interface DialogState {
   dialog: IDialog | null;
@@ -19,7 +19,7 @@ const initialState: DialogState = {
   addMessageStatus: LoadingStatus.NEVER,
   getDialogStatus: LoadingStatus.NEVER,
   getDialogError: "",
-  getExtraMessagesStatus: LoadingStatus.NEVER
+  getExtraMessagesStatus: LoadingStatus.NEVER,
 };
 
 export const dialogReducer = produce(
@@ -38,7 +38,7 @@ export const dialogReducer = produce(
         draft.messages = action.payload;
         break;
       case DialogActionTypes.GET_EXTRA_MESSAGES_STATUS:
-        draft.getExtraMessagesStatus = action.payload
+        draft.getExtraMessagesStatus = action.payload;
         break;
       case DialogActionTypes.ADD_MESSAGE:
         draft.messages.unshift(action.payload);

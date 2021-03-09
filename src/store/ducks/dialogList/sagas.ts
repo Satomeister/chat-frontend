@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { DialogListActionTypes } from "./contracts/actionTypes";
+import {DialogListActionTypes, FetchAddDialogAction} from "./contracts/actionTypes";
 import {
   addDialog,
   addDialogError,
@@ -27,7 +27,7 @@ function* fetchDialogListRequest() {
   }
 }
 
-function* fetchAddDialogRequest({ payload }: any) {
+function* fetchAddDialogRequest({ payload }: FetchAddDialogAction) {
   try {
     yield put(addDialogError(""));
     yield put(setAddDialogStatus(LoadingStatus.LOADING));

@@ -1,5 +1,5 @@
 import { IDialog } from "../../dialogList/contracts/state";
-import {IUser} from "../../user/contracts/state";
+import { IUser } from "../../user/contracts/state";
 
 export interface IMessage {
   _id: string;

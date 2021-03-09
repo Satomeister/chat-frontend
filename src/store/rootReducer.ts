@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
-import {userReducer, UserState} from "./ducks/user/reducer";
-import {dialogListReducer, DialogListState} from "./ducks/dialogList/reducer";
-import {dialogReducer, DialogState} from "./ducks/dialog/reducer";
+import { userReducer, UserState } from "./ducks/user/reducer";
+import { dialogListReducer, DialogListState } from "./ducks/dialogList/reducer";
+import { dialogReducer, DialogState } from "./ducks/dialog/reducer";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -10,9 +10,9 @@ const rootReducer = combineReducers({
 });
 
 export interface AppState {
- user: UserState,
- dialogList: DialogListState,
- dialog: DialogState
+  user: UserState;
+  dialogList: DialogListState;
+  dialog: DialogState;
 }
 
 export default rootReducer;

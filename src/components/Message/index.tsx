@@ -3,9 +3,10 @@ import classNames from "classnames";
 import { Avatar, Image } from "antd";
 
 import "./Message.scss";
+
 import { IMessage } from "../../store/ducks/dialog/contracts/state";
 import { parseEmojis } from "../../utils/parseEmojis";
-import {getMessageTime} from "../../utils/utils";
+import { getMessageTime } from "../../utils/utils";
 
 interface MessageProps {
   message: IMessage;

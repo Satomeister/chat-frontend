@@ -9,7 +9,7 @@ import {
   SetDialogListAction,
   SetDialogUnreadMessagesCountAction,
   SetGetDialogsStatusAction,
-  UpdateDialogLastMessageAction,
+  UpdateDialogListItemAction,
   UpdateDialogListItemStatusOnlineAction,
 } from "./contracts/actionTypes";
 import { IDialog } from "./contracts/state";
@@ -49,10 +49,10 @@ export const setAddDialogStatus = (
   payload,
 });
 
-export const updateDialogLastMessage = (
+export const updateDialogListItem = (
   payload: IDialog
-): UpdateDialogLastMessageAction => ({
-  type: DialogListActionTypes.UPDATE_DIALOG_LAST_MESSAGE,
+): UpdateDialogListItemAction => ({
+  type: DialogListActionTypes.UPDATE_DIALOG_LIST_ITEM,
   payload,
 });
 
@@ -61,17 +61,23 @@ export const addDialogError = (payload: string): AddDialogErrorAction => ({
   payload,
 });
 
-export const setDialogUnreadMessagesCount = (payload: string): SetDialogUnreadMessagesCountAction => ({
+export const setDialogUnreadMessagesCount = (
+  payload: string
+): SetDialogUnreadMessagesCountAction => ({
   type: DialogListActionTypes.SET_DIALOG_UNREAD_MESSAGES_COUNT,
-  payload
-})
+  payload,
+});
 
-export const setDialogLastMessageRead = (payload: string): SetDialogLastMessageReadAction => ({
+export const setDialogLastMessageRead = (
+  payload: string
+): SetDialogLastMessageReadAction => ({
   type: DialogListActionTypes.SET_DIALOG_LAST_MESSAGE_READ,
-  payload
-})
+  payload,
+});
 
-export const updateDialogListItemStatusOnline = (payload:IUser): UpdateDialogListItemStatusOnlineAction => ({
+export const updateDialogListItemStatusOnline = (
+  payload: IUser
+): UpdateDialogListItemStatusOnlineAction => ({
   type: DialogListActionTypes.UPDATE_DIALOG_LIST_ITEM_STATUS_ONLINE,
-  payload
-})
+  payload,
+});

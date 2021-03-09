@@ -26,24 +26,27 @@ const MessagesList: FC<MessagesListProps> = ({
   const dialogId = useSelector(selectDialogId);
   const getExtraMessagesStatus = useSelector(selectGetExtraMessageStatus);
 
-  const [prevHeight, setPrevHeight] = useState<number>(0)
+  const [prevHeight, setPrevHeight] = useState<number>(0);
   useEffect(() => {
-    if (getExtraMessagesStatus === LoadingStatus.SUCCESS || getExtraMessagesStatus === 'END') {
-      if (messagesRef.current){
-        const scrollPositionBeforeExtraMessages = messagesRef.current.scrollHeight - prevHeight
-        console.log(scrollPositionBeforeExtraMessages)
+    if (
+      getExtraMessagesStatus === LoadingStatus.SUCCESS ||
+      getExtraMessagesStatus === "END"
+    ) {
+      if (messagesRef.current) {
+        const scrollPositionBeforeExtraMessages =
+          messagesRef.current.scrollHeight - prevHeight;
         messagesRef.current.scroll(0, scrollPositionBeforeExtraMessages);
       }
     }
     //eslint-disable-next-line
-  }, [getExtraMessagesStatus])
+  }, [getExtraMessagesStatus]);
 
   useEffect(() => {
     const el = messagesRef.current;
     const listener = () => {
-      if (messagesRef.current && messagesRef.current.scrollTop < 10 ) {
+      if (messagesRef.current && messagesRef.current.scrollTop < 10) {
         if (dialogId) {
-          setPrevHeight(messagesRef.current.scrollHeight)
+          setPrevHeight(messagesRef.current.scrollHeight);
           dispatch(
             fetchGetNewMessagesChunk({ dialogId, count: messages.length })
           );
@@ -51,7 +54,10 @@ const MessagesList: FC<MessagesListProps> = ({
         }
       }
     };
-    if (getExtraMessagesStatus !== "END" && getExtraMessagesStatus !== LoadingStatus.LOADING) {
+    if (
+      getExtraMessagesStatus !== "END" &&
+      getExtraMessagesStatus !== LoadingStatus.LOADING
+    ) {
       el?.addEventListener("scroll", listener);
     }
     return () => {
@@ -91,7 +97,8 @@ const MessagesList: FC<MessagesListProps> = ({
             return (
               <Message key={message._id} message={message} userId={userId} />
             );
-          }).reverse()
+          })
+          .reverse()
       ) : (
         <div style={{ marginTop: 170 }}>
           <Empty description="No messages yet" />

@@ -1,20 +1,21 @@
-import React, { ChangeEvent, FC, useEffect, useState } from "react";
-import { Empty, Input, Typography } from "antd";
-import { SearchOutlined, LogoutOutlined } from "@ant-design/icons";
+import React, {ChangeEvent, FC, useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {Empty, Input, Typography} from "antd";
+import {LogoutOutlined, SearchOutlined} from "@ant-design/icons";
 
 import "./DialogsList.scss";
 
-import { useDispatch, useSelector } from "react-redux";
-import { selectDialogs } from "../../store/ducks/dialogList/selector";
+import {selectDialogs} from "../../store/ducks/dialogList/selector";
 import {
   addDialog,
   fetchDialogList,
 } from "../../store/ducks/dialogList/actionCreators";
-import { IDialog } from "../../store/ducks/dialogList/contracts/state";
-import { AddDialog, DialogItem } from "./components";
+import {IDialog} from "../../store/ducks/dialogList/contracts/state";
+import {AddDialog, DialogItem} from "./components";
 import socket from "../../core/socket";
-import { selectUserId } from "../../store/ducks/user/selector";
+import {selectUserId} from "../../store/ducks/user/selector";
 import {setUserData} from "../../store/ducks/user/actionCreators";
+import {showNewOnlineStatus} from "../../utils/utils";
 
 const DialogsList: FC = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -42,8 +43,14 @@ const DialogsList: FC = (): JSX.Element => {
 
   useEffect(() => {
     const dialogByUpdatedAt = [...dialogs]
-      // @ts-ignore
-      .sort((a, b) => new Date(a.lastMessage?.createdAt) - new Date(b.lastMessage?.createdAt))
+
+      .sort(
+        (a, b) =>
+          // @ts-ignore
+          new Date(a.lastMessage?.createdAt) -
+          // @ts-ignore
+          new Date(b.lastMessage?.createdAt)
+      )
       .reverse();
     setFilteredDialogs(dialogByUpdatedAt);
   }, [dialogs]);
@@ -64,16 +71,21 @@ const DialogsList: FC = (): JSX.Element => {
   };
 
   const onLogoutHandler = () => {
+    showNewOnlineStatus(false, userId);
     localStorage.removeItem("token");
-    dispatch(setUserData(null))
-  }
+    dispatch(setUserData(null));
+  };
 
   return (
     <div className="dialogs">
       <div className="dialogs__header">
-        <LogoutOutlined onClick={onLogoutHandler} rotate={180} className="dialogs__header-icon"/>
+        <LogoutOutlined
+          onClick={onLogoutHandler}
+          rotate={180}
+          className="dialogs__header-icon"
+        />
         <Typography className="dialogs__header-text">All Dialogs</Typography>
-        <AddDialog />
+        <AddDialog/>
       </div>
       <div className="dialogs__content">
         <div className="dialogs__content-search">
@@ -83,16 +95,16 @@ const DialogsList: FC = (): JSX.Element => {
             value={inputValue}
             size="large"
             placeholder="Search"
-            prefix={<SearchOutlined style={{ color: "#8C8C8C" }} />}
+            prefix={<SearchOutlined style={{color: "#8C8C8C"}}/>}
           />
         </div>
         <div className="dialogs__list">
           {filteredDialogs ? (
             filteredDialogs.map((dialog) => {
-              return <DialogItem key={dialog._id} dialog={dialog} />;
+              return <DialogItem key={dialog._id} dialog={dialog}/>;
             })
           ) : (
-            <Empty description="No dialogs yet" />
+            <Empty description="No dialogs yet"/>
           )}
         </div>
       </div>

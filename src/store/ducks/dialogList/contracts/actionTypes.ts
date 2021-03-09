@@ -10,7 +10,7 @@ export enum DialogListActionTypes {
   ADD_DIALOG = "dialogList/ADD_DIALOG",
   SET_GET_DIALOGS_STATUS = "dialogList/SET_GET_DIALOGS_STATUS",
   SET_ADD_DIALOG_STATUS = "dialogList/SET_ADD_DIALOG_STATUS",
-  UPDATE_DIALOG_LAST_MESSAGE = "dialogList/UPDATE_DIALOG_LAST_MESSAGE",
+  UPDATE_DIALOG_LIST_ITEM = "dialogList/UPDATE_DIALOG_LIST_ITEM",
   ADD_DIALOG_ERROR = "dialogList/ADD_DIALOG_ERROR",
   SET_DIALOG_UNREAD_MESSAGES_COUNT = "dialogList/SET_UNREAD_MESSAGES_COUNT",
   SET_DIALOG_LAST_MESSAGE_READ = "dialogList/SET_DIALOG_LAST_MESSAGE_READ",
@@ -48,9 +48,9 @@ export interface SetAddDialogStatusAction
   payload: LoadingStatus;
 }
 
-export interface UpdateDialogLastMessageAction
+export interface UpdateDialogListItemAction
   extends Action<DialogListActionTypes> {
-  type: DialogListActionTypes.UPDATE_DIALOG_LAST_MESSAGE;
+  type: DialogListActionTypes.UPDATE_DIALOG_LIST_ITEM;
   payload: IDialog;
 }
 
@@ -84,7 +84,7 @@ export type DialogListActions =
   | AddDialogAction
   | SetAddDialogStatusAction
   | SetGetDialogsStatusAction
-  | UpdateDialogLastMessageAction
+  | UpdateDialogListItemAction
   | AddDialogErrorAction
   | SetDialogUnreadMessagesCountAction
   | SetDialogLastMessageReadAction

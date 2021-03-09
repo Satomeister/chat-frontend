@@ -6,7 +6,13 @@ export const dialogApi = {
     const { data } = await axios.get(`/dialog/${dialogId}`);
     return data;
   },
-  async getNewMessagesChunk({dialogId,count}: {dialogId: string, count: number}) {
+  async getNewMessagesChunk({
+    dialogId,
+    count,
+  }: {
+    dialogId: string;
+    count: number;
+  }) {
     const { data } = await axios.get(`/messages/${dialogId}?count=${count}`);
     return data;
   },

@@ -1,4 +1,4 @@
-import {call, put, takeLatest} from "redux-saga/effects";
+import { call, put, takeLatest } from "redux-saga/effects";
 import {
   FetchSignInAction,
   FetchSignUpAction,
@@ -10,17 +10,17 @@ import {
   setUserData,
   setUserLoadingStatus,
 } from "./actionCreators";
-import {LoadingStatus} from "../../types";
-import {AuthApi} from "../../../api/authApi";
-import {showNewOnlineStatus} from "../../../utils/utils";
+import { LoadingStatus } from "../../types";
+import { AuthApi } from "../../../api/authApi";
+import { showNewOnlineStatus } from "../../../utils/utils";
 
-function* loginRequest({payload}: FetchSignInAction) {
+function* loginRequest({ payload }: FetchSignInAction) {
   try {
     yield put(setUserData(null));
     yield put(setLoginError(""));
     localStorage.removeItem("token");
     yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-    const {data: res} = yield call(AuthApi.signIn, payload);
+    const { data: res } = yield call(AuthApi.signIn, payload);
     localStorage.setItem("token", res.data.token);
     delete res.data.token;
     res.data.isOnline = true;
@@ -32,16 +32,16 @@ function* loginRequest({payload}: FetchSignInAction) {
   }
 }
 
-function* registrationRequest({payload}: FetchSignUpAction) {
+function* registrationRequest({ payload }: FetchSignUpAction) {
   try {
     yield put(setUserData(null));
     yield put(setRegError(""));
     localStorage.removeItem("token");
     yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-    const {data: res} = yield call(AuthApi.signUp, payload);
+    const { data: res } = yield call(AuthApi.signUp, payload);
     localStorage.setItem("token", res.data.token);
     delete res.data.token;
-    res.data.isOnline = true
+    res.data.isOnline = true;
     showNewOnlineStatus(true, res.data);
     yield put(setUserData(res.data));
   } catch (error) {
@@ -53,8 +53,8 @@ function* registrationRequest({payload}: FetchSignUpAction) {
 function* fetchUserDataRequest() {
   try {
     yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-    const {data: res} = yield call(AuthApi.getMe);
-    res.data.isOnline = true
+    const { data: res } = yield call(AuthApi.getMe);
+    res.data.isOnline = true;
     showNewOnlineStatus(true, res.data);
     yield put(setUserData(res.data));
   } catch (error) {

@@ -1,25 +1,28 @@
 import React, { FC, RefObject, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
-import {Result, Spin, Typography} from "antd";
+import { Result, Spin, Typography } from "antd";
 
 import "emoji-mart/css/emoji-mart.css";
-
 import "./Dialog.scss";
-import { useDispatch, useSelector } from "react-redux";
+
+import socket from "../../core/socket";
 import {
-  selectDialog, selectGetDialogError,
-  selectGetDialogStatus, selectMessages,
+  selectDialog,
+  selectGetDialogError,
+  selectGetDialogStatus,
+  selectMessages,
 } from "../../store/ducks/dialog/selectors";
 import {
-  fetchGetDialog, setMessagesRead,
+  fetchGetDialog,
+  setMessagesRead,
   updateDialogOnlineStatus,
 } from "../../store/ducks/dialog/actionCreators";
-import { ChatInput, MessagesList } from "./components";
-import { selectUserId } from "../../store/ducks/user/selector";
 import { LoadingStatus } from "../../store/types";
-import socket from "../../core/socket";
 import { IUser } from "../../store/ducks/user/contracts/state";
+import { selectUserId } from "../../store/ducks/user/selector";
+import { ChatInput, MessagesList } from "./components";
 
 const Dialog: FC = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
@@ -27,8 +30,8 @@ const Dialog: FC = (): JSX.Element => {
   const dialog = useSelector(selectDialog);
   const userId = useSelector(selectUserId);
   const status = useSelector(selectGetDialogStatus);
-  const error = useSelector(selectGetDialogError)
-  const messages = useSelector(selectMessages)
+  const error = useSelector(selectGetDialogError);
+  const messages = useSelector(selectMessages);
   const [
     messagesRef,
     setMessagesRef,
@@ -59,13 +62,13 @@ const Dialog: FC = (): JSX.Element => {
 
   useEffect(() => {
     const listener = (dialogId: string) => {
-      dispatch(setMessagesRead(dialogId))
-    }
-    socket.on("MESSAGE:IS_READ", listener)
+      dispatch(setMessagesRead(dialogId));
+    };
+    socket.on("MESSAGE:IS_READ", listener);
     return () => {
-      socket.off("MESSAGE:IS_READ", listener)
-    }
-  }, [dispatch])
+      socket.off("MESSAGE:IS_READ", listener);
+    };
+  }, [dispatch]);
 
   const scrollMessagesDown = () => {
     if (messagesRef?.current)
@@ -82,37 +85,38 @@ const Dialog: FC = (): JSX.Element => {
 
   return (
     <div className="dialog">
-      {
-        !error ? (
-          <>
-            <div className="dialog__header">
-              <div className="dialog__header-info">
-                <Typography className="dialog__header-info-title">
-                  {partner?.name}
-                </Typography>
+      {!error ? (
+        <>
+          <div className="dialog__header">
+            <div className="dialog__header-info">
+              <Typography className="dialog__header-info-title">
+                {partner?.name}
+              </Typography>
 
-                <div
-                  className={classNames({
-                    "dialog__header-info-online": partner?.isOnline,
-                    "dialog__header-info-offline": !partner?.isOnline,
-                  })}
-                >
-                  {partner?.isOnline ? "online" : "offline"}
-                </div>
+              <div
+                className={classNames({
+                  "dialog__header-info-online": partner?.isOnline,
+                  "dialog__header-info-offline": !partner?.isOnline,
+                })}
+              >
+                {partner?.isOnline ? "online" : "offline"}
               </div>
             </div>
+          </div>
           <MessagesList messages={messages} setMessagesRef={setMessagesRef} />
-        <ChatInput dialogId={dialog!._id} isFirstMessage={messages.length === 0} scrollMessagesDown={scrollMessagesDown} />
-          </>
-        )
-        : (
-            <Result
-              status="404"
-              title="404"
-              subTitle="Sorry, the dialog is not found."
-            />
-        )
-      }
+          <ChatInput
+            dialogId={dialog!._id}
+            isFirstMessage={messages.length === 0}
+            scrollMessagesDown={scrollMessagesDown}
+          />
+        </>
+      ) : (
+        <Result
+          status="404"
+          title="404"
+          subTitle="Sorry, the dialog is not found."
+        />
+      )}
     </div>
   );
 };

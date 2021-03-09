@@ -13,8 +13,8 @@ export interface UserState {
 const initialState: UserState = {
   data: null,
   status: LoadingStatus.NEVER,
-  loginError: '',
-  regError: ''
+  loginError: "",
+  regError: "",
 };
 
 export const userReducer = produce(

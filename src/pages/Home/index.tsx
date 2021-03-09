@@ -1,6 +1,5 @@
-import React, {FC, useCallback, useEffect} from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { Route } from "react-router-dom";
-import {Empty, Result} from "antd";
 import { useDispatch, useSelector } from "react-redux";
 
 import "./Home.scss";
@@ -9,42 +8,59 @@ import socket from "../../core/socket";
 import { Dialog, DialogsList } from "../../modules";
 import { IMessage } from "../../store/ducks/dialog/contracts/state";
 import { IDialog } from "../../store/ducks/dialogList/contracts/state";
-import { addMessageWithRead } from "../../store/ducks/dialog/actionCreators";
+import { addMessage } from "../../store/ducks/dialog/actionCreators";
 import {
   setDialogLastMessageRead,
   setDialogUnreadMessagesCount,
-  updateDialogLastMessage,
+  updateDialogListItem,
 } from "../../store/ducks/dialogList/actionCreators";
 import { selectDialogId } from "../../store/ducks/dialog/selectors";
 import { selectUserId } from "../../store/ducks/user/selector";
 import { showNewOnlineStatus } from "../../utils/utils";
 import { updateUserOnlineStatus } from "../../store/ducks/user/actionCreators";
-
-
+import { HomeEmpty } from "../../components";
 
 const Home: FC = (): JSX.Element => {
   const dispatch = useDispatch();
   const currentDialogId = useSelector(selectDialogId);
   const userId = useSelector(selectUserId);
+  const [visible, setVisible] = useState<boolean>();
 
-  const setMessageReadSocket = useCallback((dialogId: string) => {
-    dispatch(setDialogUnreadMessagesCount(dialogId));
-    socket.emit("MESSAGE:READ", dialogId, userId);
-  }, [dispatch, userId]);
+  const setMessagesReadSocket = useCallback(
+    (dialogId: string) => {
+      dispatch(setDialogUnreadMessagesCount(dialogId));
+      socket.emit("MESSAGE:READ", dialogId, userId);
+    },
+    [dispatch, userId]
+  );
 
   useEffect(() => {
-    if (document.visibilityState === "visible") {
-      currentDialogId && setMessageReadSocket(currentDialogId);
+    if (visible === undefined && currentDialogId) {
+      setMessagesReadSocket(currentDialogId);
     }
-  }, [currentDialogId, setMessageReadSocket])
+    // eslint-disable-next-line
+  }, [currentDialogId]);
+
+  useEffect(() => {
+    const listener = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      showNewOnlineStatus(false, userId);
+    };
+    window.addEventListener("beforeunload", listener);
+    return () => {
+      window.removeEventListener("beforeunload", listener);
+    };
+  });
 
   useEffect(() => {
     const listener = () => {
       if (document.visibilityState === "visible") {
+        setVisible(true);
         showNewOnlineStatus(true, userId);
         dispatch(updateUserOnlineStatus(true));
-        currentDialogId && setMessageReadSocket(currentDialogId);
+        currentDialogId && setMessagesReadSocket(currentDialogId);
       } else {
+        setVisible(false);
         showNewOnlineStatus(false, userId);
         dispatch(updateUserOnlineStatus(false));
       }
@@ -53,7 +69,7 @@ const Home: FC = (): JSX.Element => {
     return () => {
       document.removeEventListener("visibilitychange", listener);
     };
-  }, [dispatch, userId, currentDialogId]);
+  }, [dispatch, userId, currentDialogId, setMessagesReadSocket]);
 
   useEffect(() => {
     const listener = ({
@@ -63,11 +79,11 @@ const Home: FC = (): JSX.Element => {
       message: IMessage;
       dialog: IDialog;
     }) => {
-      dispatch(updateDialogLastMessage(dialog));
+      dispatch(updateDialogListItem(dialog));
       if (currentDialogId === dialog._id) {
-        dispatch(addMessageWithRead(message));
-        if (document.visibilityState === "visible") {
-          setMessageReadSocket(currentDialogId);
+        dispatch(addMessage(message));
+        if (visible || visible === undefined) {
+          setMessagesReadSocket(currentDialogId);
         }
       }
     };
@@ -76,7 +92,7 @@ const Home: FC = (): JSX.Element => {
       socket.off("MESSAGE:SEND_MESSAGE", listener);
     };
     // eslint-disable-next-line
-  }, [currentDialogId]);
+  }, [currentDialogId, visible]);
 
   useEffect(() => {
     const listener = (dialogId: string) => {
@@ -91,25 +107,7 @@ const Home: FC = (): JSX.Element => {
   return (
     <div className="home">
       <DialogsList />
-      <Route
-        exact
-        path="/"
-        component={() => (
-          <div
-            className="dialog"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Empty
-              description="Select a chat to start messaging"
-              style={{ transform: "translateY(-50%)" }}
-            />
-          </div>
-        )}
-      />
+      <Route exact path="/" component={HomeEmpty} />
       <Route exact path="/dialog/:id" component={Dialog} />
     </div>
   );

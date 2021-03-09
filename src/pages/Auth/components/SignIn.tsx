@@ -6,7 +6,8 @@ import { FormWrapper, SubmitButton } from "../../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSignIn } from "../../../store/ducks/user/actionCreators";
 import {
-  selectIsAuth, selectLoginError,
+  selectIsAuth,
+  selectLoginError,
   selectUserStatus,
 } from "../../../store/ducks/user/selector";
 import { LoadingStatus } from "../../../store/types";
@@ -38,7 +39,9 @@ const SignIn: FC = (): JSX.Element => {
       <Form onFinish={onFinish}>
         <Form.Item
           name="email"
-          rules={[{ required: true, message: "Please input your login or email!" }]}
+          rules={[
+            { required: true, message: "Please input your login or email!" },
+          ]}
         >
           <Input
             size="large"

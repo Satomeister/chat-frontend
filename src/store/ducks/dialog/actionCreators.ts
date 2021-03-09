@@ -1,7 +1,6 @@
 import { IMessage, SendMessagePayload } from "./contracts/state";
 import {
   AddMessageAction,
-  AddMessageAndReadAction,
   AddMessageStatusAction,
   DialogActionTypes,
   FetchGetDialogAction,
@@ -29,15 +28,20 @@ export const fetchGetDialog = (payload: string): FetchGetDialogAction => ({
   payload,
 });
 
-export const fetchGetNewMessagesChunk = (payload: {dialogId: string, count: number}): FetchGetNewMessagesChunkAction => ({
+export const fetchGetNewMessagesChunk = (payload: {
+  dialogId: string;
+  count: number;
+}): FetchGetNewMessagesChunkAction => ({
   type: DialogActionTypes.FETCH_GET_NEW_MESSAGES_CHUNK,
-  payload
-})
+  payload,
+});
 
-export const getExtraMessagesStatus = (payload: LoadingStatus | 'END'): GetExtraMessagesStatusAction => ({
+export const getExtraMessagesStatus = (
+  payload: LoadingStatus | "END"
+): GetExtraMessagesStatusAction => ({
   type: DialogActionTypes.GET_EXTRA_MESSAGES_STATUS,
-  payload
-})
+  payload,
+});
 
 export const setMessages = (payload: IMessage[]): SetMessagesAction => ({
   type: DialogActionTypes.SET_MESSAGES,
@@ -56,32 +60,34 @@ export const addMessage = (payload: IMessage): AddMessageAction => ({
   payload,
 });
 
-export const getDialogStatus = (payload: LoadingStatus): GetDialogStatusAction => ({
+export const getDialogStatus = (
+  payload: LoadingStatus
+): GetDialogStatusAction => ({
   type: DialogActionTypes.GET_DIALOG_STATUS,
   payload,
 });
 
-export const addMessageStatus = (payload: LoadingStatus):AddMessageStatusAction  => ({
+export const addMessageStatus = (
+  payload: LoadingStatus
+): AddMessageStatusAction => ({
   type: DialogActionTypes.ADD_MESSAGE_STATUS,
   payload,
 });
 
-export const updateDialogOnlineStatus = (payload: {user: IUser, isOnline: boolean}): UpdateDialogOnlineStatusAction => ({
+export const updateDialogOnlineStatus = (payload: {
+  user: IUser;
+  isOnline: boolean;
+}): UpdateDialogOnlineStatusAction => ({
   type: DialogActionTypes.UPDATE_DIALOG_ONLINE_STATUS,
-  payload
-})
-
-export const addMessageWithRead = (payload: IMessage): AddMessageAndReadAction => ({
-  type: DialogActionTypes.ADD_MESSAGE_AND_READ,
-  payload
-})
+  payload,
+});
 
 export const setMessagesRead = (payload: string): SetMessagesReadAction => ({
   type: DialogActionTypes.SET_MESSAGES_READ,
-  payload
-})
+  payload,
+});
 
 export const getDialogError = (payload: string): GetDialogErrorAction => ({
   type: DialogActionTypes.GET_DIALOG_ERROR,
-  payload
-})
+  payload,
+});
